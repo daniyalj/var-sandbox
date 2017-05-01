@@ -97,6 +97,10 @@ def processing_loop(spark_master, input_queue, output_queue, wikieod_file):
     spark = pysql.SparkSession.builder.master(spark_master).getOrCreate()
     sc = spark.sparkContext
 
+    print('total mem={}'.format(sc._jvm.java.lang.Runtime.getRuntime().totalMemory()))
+    print('max mem={}'.format(sc._jvm.java.lang.Runtime.getRuntime().maxMemory()))
+    print('free mem={}'.format(sc._jvm.java.lang.Runtime.getRuntime().freeMemory()))
+
     output_queue.put('ready')
 
     df = spark.read.load(wikieod_file)
